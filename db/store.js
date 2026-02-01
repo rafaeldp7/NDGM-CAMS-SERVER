@@ -11,9 +11,9 @@ try {
 // In-memory fallback data
 const memory = {
   users: [
-    { _id: 'u1', name: 'Alice Johnson', idNumber: 'A1001', role: 'user', dateCreated: new Date(Date.now() - 86400000 * 10).toISOString() },
-    { _id: 'u2', name: 'Bob Santos', idNumber: 'B2002', role: 'staff', dateCreated: new Date(Date.now() - 86400000 * 5).toISOString() },
-    { _id: 'u3', name: 'Guard Maria', idNumber: 'G3003', role: 'guard', dateCreated: new Date(Date.now() - 86400000 * 2).toISOString() },
+    { _id: 'u1', name: 'Alice Johnson', idNumber: 'A1001', role: 'student', dateCreated: new Date(Date.now() - 86400000 * 10).toISOString() },
+    { _id: 'u2', name: 'Bob Santos', idNumber: 'B2002', role: 'faculty', dateCreated: new Date(Date.now() - 86400000 * 5).toISOString() },
+    { _id: 'u3', name: 'Maria Cruz', idNumber: 'G3003', role: 'support', dateCreated: new Date(Date.now() - 86400000 * 2).toISOString() },
   ],
   logs: [
     { _id: 'l1', timeIn: new Date(Date.now() - 3600 * 1000 * 5).toISOString(), timeOut: new Date(Date.now() - 3600 * 1000 * 2).toISOString(), userName: 'Alice Johnson', userIdNumber: 'A1001', rfidScannerId: 'SCANNER-1' },
