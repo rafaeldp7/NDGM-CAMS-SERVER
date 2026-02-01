@@ -10,10 +10,12 @@ const logRoutes = require('./routes/logs');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Validate required env (fail fast in production)
+// In production prefer a Mongo URI, but allow the in-memory fallback when absent
 if (isProduction) {
   const hasMongo = process.env.MONGO_URI || process.env.MONGODB_URI || process.env.ATLAS_URL || process.env.atlas_URL;
-  if (!hasMongo) throw new Error('MONGO_URI (or ATLAS_URL) is required in production');
+  if (!hasMongo) {
+    console.warn('Warning: no MongoDB URI provided; starting with in-memory fallback. Set MONGO_URI or ATLAS_URL for persistent storage.');
+  }
 }
 
 const app = express();
@@ -29,13 +31,18 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, message: 'RFID Server running' });
 });
 
+// Root - friendly message so hitting the domain root doesn't return 404
+app.get('/', (req, res) => {
+  res.json({ ok: true, message: 'NDGM RFID API - see /api/* endpoints' });
+});
+
 // API routes (authentication endpoints disabled for development)
 app.use('/api/users', userRoutes);
 app.use('/api/logs', logRoutes);
 
 // 404
 app.use((req, res) => {
-  res.status(404).json({ error: 'Not founds' });
+  res.status(404).json({ error: 'Not found' });
 });
 
 // Error handler (no stack/details in production)
