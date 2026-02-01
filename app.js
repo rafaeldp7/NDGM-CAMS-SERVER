@@ -25,6 +25,10 @@ const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
 
+// Body parsers: accept JSON and URL-encoded bodies
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true }));
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ ok: true, message: 'RFID Server running' });

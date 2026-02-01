@@ -43,8 +43,16 @@ scheduleDailyReset();
 // If user not in DB, returns userFound: false and no log is created.
 router.post('/scan', optionalAuth, async (req, res) => {
   try {
+    // Log incoming request for diagnostics
+    console.log('[/api/logs/scan] headers:', { origin: req.headers.origin, 'content-type': req.headers['content-type'] });
+    console.log('[/api/logs/scan] query:', req.query);
+    console.log('[/api/logs/scan] body:', req.body);
+
     const body = req.body || {};
-    const { userIdNumber, rfidScannerId } = body;
+    // tolerate multiple possible field names and query params from different clients
+    let userIdNumber = (body.userIdNumber || body.userId || body.idNumber || (body.user && body.user.idNumber) || req.query.userIdNumber || '').toString().trim();
+    let rfidScannerId = (body.rfidScannerId || body.scannerId || body.rfidScanner || req.query.rfidScannerId || '').toString().trim();
+
     if (!userIdNumber || !rfidScannerId) {
       return res.status(400).json({ error: 'userIdNumber and rfidScannerId are required.' });
     }
