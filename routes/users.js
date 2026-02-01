@@ -40,7 +40,7 @@ router.get('/by-id/:idNumber', async (req, res) => {
 // POST /api/users — create user
 router.post('/', async (req, res) => {
   try {
-    const { name, idNumber, role, password } = req.body;
+    const { name, idNumber, role } = req.body;
     if (!name || !idNumber || !role) {
       return res.status(400).json({ error: 'Name, idNumber, and role are required.' });
     }
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     if (existing) {
       return res.status(400).json({ error: 'User with this ID number already exists.' });
     }
-    const user = await store.createUser({ name, idNumber, role, password: password || undefined });
+    const user = await store.createUser({ name, idNumber, role });
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
