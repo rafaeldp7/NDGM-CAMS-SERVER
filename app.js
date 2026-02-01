@@ -4,6 +4,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { connectMongo } = require('./db/mongo');
 
+
+
+
 // Authentication removed for development — auth routes not mounted
 const userRoutes = require('./routes/users');
 const logRoutes = require('./routes/logs');
@@ -20,11 +23,7 @@ if (isProduction) {
 
 const app = express();
 
-const corsOptions = process.env.CORS_ORIGIN
-  ? { origin: process.env.CORS_ORIGIN.split(',').map((o) => o.trim()) }
-  : {};
-app.use(cors(corsOptions));
-app.use(express.json({ limit: '1mb' }));
+app.use(cors({ origin: true, credentials: true }));
 
 // Health check
 app.get('/health', (req, res) => {
