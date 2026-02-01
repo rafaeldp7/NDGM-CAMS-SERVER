@@ -43,7 +43,8 @@ scheduleDailyReset();
 // If user not in DB, returns userFound: false and no log is created.
 router.post('/scan', optionalAuth, async (req, res) => {
   try {
-    const { userIdNumber, rfidScannerId } = req.body;
+    const body = req.body || {};
+    const { userIdNumber, rfidScannerId } = body;
     if (!userIdNumber || !rfidScannerId) {
       return res.status(400).json({ error: 'userIdNumber and rfidScannerId are required.' });
     }
