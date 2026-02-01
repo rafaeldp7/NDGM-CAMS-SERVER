@@ -46,7 +46,7 @@ app.use((req, res) => {
 });
 
 // Error handler (no stack/details in production)
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err);
   const message = isProduction ? 'Internal server error' : (err.message || 'Internal server error');
   res.status(500).json({ error: message });
